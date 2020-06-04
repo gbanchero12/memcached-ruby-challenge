@@ -16,7 +16,7 @@
 # Memcached
 # END
 
-public def save(arr, hash)
+def save(arr, hash)
   key = arr[1]
   flags = arr[2]
   expire_time = arr[3].to_i
@@ -28,16 +28,16 @@ public def save(arr, hash)
   o = [('a'..'z'), ('A'..'Z')].map(&:to_a).flatten
   cas_unique = (0...8).map { o[rand(o.length)] }.join
   hash[key] = { flags: flags, exptime: exptime_.to_s, value: value, cas_unique: cas_unique }
-  reply ? (return "\r\nSTORED") : (return '')
+  reply != 'false' ? (return "\r\nSTORED") : (return '')
 end
 
 require 'socket'
 server = TCPServer.open(2000)
 
 # Hash general con datos de prueba
-hash = { 'datos' => { flags: '0', exptime: '2020-07-01T00:04:00+00:00', value: 'valor_de_prueba', cas_unique: 'afwamhvj' },
-         'de' => { flags: '0', exptime: '2020-07-01T00:04:00+00:00', value: 'valor_de_prueba_2', cas_unique: 'fhrydbne' },
-         'prueba' => { flags: '0', exptime: '2020-07-01T00:04:00+00:00', value: 'valor_de_prueba_3', cas_unique: 'wurbsjwk' } }
+hash = { 'datos' => { flags: '0', exptime: '2020-07-01T00:04:00+00:00', value: 'valor_de_prueba', cas_unique: 'aFwamHvj' },
+         'de' => { flags: '0', exptime: '2020-07-01T00:04:00+00:00', value: 'valor_de_prueba_2', cas_unique: 'fhRyDbne' },
+         'prueba' => { flags: '0', exptime: '2020-07-01T00:04:00+00:00', value: 'valor_de_prueba_3', cas_unique: 'wuRbsjWk' } }
 
 loop do
   Thread.start(server.accept) do |client|
@@ -71,6 +71,7 @@ loop do
         response_ = (response[:cas_unique]) unless response.nil?
 
         response_.nil? ? (client.puts 'false') : (client.puts "\r\n" + response_)
+
 
       when 'set'
 
@@ -112,7 +113,7 @@ loop do
         o = [('a'..'z'), ('A'..'Z')].map(&:to_a).flatten
         cas_unique = (0...8).map { o[rand(o.length)] }.join
         hash[key] = { flags: hash[key][:flags] + flags, exptime: exptime.to_s, value: hash[key][:value] + value, cas_unique: cas_unique }
-        reply ? (client.puts "\r\nSTORED") : nil
+        reply != 'false' ? (client.puts "\r\nSTORED") : nil
       when 'prepend'
         key = array[1]
         if hash[key].nil?
@@ -129,7 +130,7 @@ loop do
         o = [('a'..'z'), ('A'..'Z')].map(&:to_a).flatten
         cas_unique = (0...8).map { o[rand(o.length)] }.join
         hash[key] = { flags: hash[key][:flags] + flags, exptime: exptime.to_s, value: +value + hash[key][:value], cas_unique: cas_unique }
-        reply ? (client.puts "\r\nSTORED") : nil
+        reply != 'false' ? (client.puts "\r\nSTORED") : nil
       when 'cas'
         # set key flags exptime bytes unique_cas_key [noreply] value
 
@@ -155,7 +156,7 @@ loop do
         o = [('a'..'z'), ('A'..'Z')].map(&:to_a).flatten
         cas_unique = (0...8).map { o[rand(o.length)] }.join
         hash[key] = { flags: flags, exptime: exptime_.to_s, value: value, cas_unique: cas_unique }
-        reply ? (client.puts "\r\nSTORED") : (client.puts '')
+        reply != 'false' ? (client.puts "\r\nSTORED") : (client.puts '')
       else
         client.puts "You gave me #{response} -- I have no idea what to do with that."
       end # end case
