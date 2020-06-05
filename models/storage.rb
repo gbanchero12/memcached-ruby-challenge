@@ -8,6 +8,10 @@ class Storage
 
   attr_writer :value
 
+  #HandleRequest method: params => array
+  # array => command info received
+  # Handle data to be stored form child classes
+  #
   def handleRequest(arr)
     key = arr[1]
     flags = arr[2]
