@@ -5,6 +5,11 @@ class Gets < Retrieval
     gets(array, hash)
   end
 
+  #Gets Memcached method: params => array, hash
+  # array => command info received
+  # hash => general hash in memory
+  # Returns the unique key of the data stored
+  #
   def gets(array, hash)
     response = hash[array[1]]
     response_ = (response[:cas_unique]) unless response.nil?

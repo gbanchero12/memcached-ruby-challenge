@@ -1,10 +1,16 @@
 
+
 class Get < Retrieval
 
   def initialize(array, hash)
     get(array, hash)
   end
 
+  #Get Memcached method: params => array, hash
+  # array => command info received
+  # hash => general hash in memory
+  # Assign superclass 'result' of the operation
+  #
   def get(array, hash)
     response = hash[array[1]]
     unless response.nil?
