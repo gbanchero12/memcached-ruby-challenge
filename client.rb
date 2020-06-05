@@ -16,13 +16,10 @@ class Client
       Thread.new do
         loop do
           message = $stdin.gets.chomp
+          message == 'quit' ? @socket.close : nil
           @socket.puts message
         end
       end
-    rescue IOError => e
-      puts e.message
-      # e.backtrace
-      @socket.close
     end
 
   end
@@ -38,9 +35,6 @@ class Client
           end
         end
       end
-    rescue IOError => e
-      puts e.message
-      @socket.close
     end
   end
 end
