@@ -32,6 +32,10 @@ def save(arr, hash)
 end
 
 require 'socket'
+require './models/retrieval'
+require './models/get'
+require './models/gets'
+
 server = TCPServer.open(2000)
 
 # Hash general con datos de prueba
@@ -49,30 +53,9 @@ loop do
 
       case command
       when 'get'
-        if array.length != 2
-          print 'ERROR'
-          break
-        end
-
-        response = hash[array[1]]
-        unless response.nil?
-          response_ = ('VALUE ' + array[1] + ' ' + response[:flags] + ' ' + response[:exptime] + ' ' + response[:value].length.to_s + "\r\n" + response[:value])
-        end
-
-        response_.nil? ? (client.puts 'false') : (client.puts "\r\n" + response_)
-
+        client.puts Get.new(array, hash).to_s
       when 'gets'
-        if array.length != 2
-          print 'ERROR'
-          break
-        end
-
-        response = hash[array[1]]
-        response_ = (response[:cas_unique]) unless response.nil?
-
-        response_.nil? ? (client.puts 'false') : (client.puts "\r\n" + response_)
-
-
+        client.puts Gets.new(array, hash).to_s
       when 'set'
 
         key = array[1]
@@ -112,7 +95,7 @@ loop do
         exptime = Time.now + expire_time
         o = [('a'..'z'), ('A'..'Z')].map(&:to_a).flatten
         cas_unique = (0...8).map { o[rand(o.length)] }.join
-        hash[key] = { flags: hash[key][:flags] + flags, exptime: exptime.to_s, value: hash[key][:value] + value, cas_unique: cas_unique }
+        hash[key] = {flags: hash[key][:flags] + flags, exptime: exptime.to_s, value: hash[key][:value] + value, cas_unique: cas_unique}
         reply != 'false' ? (client.puts "\r\nSTORED") : nil
       when 'prepend'
         key = array[1]
@@ -129,7 +112,7 @@ loop do
         exptime = Time.now + expire_time
         o = [('a'..'z'), ('A'..'Z')].map(&:to_a).flatten
         cas_unique = (0...8).map { o[rand(o.length)] }.join
-        hash[key] = { flags: hash[key][:flags] + flags, exptime: exptime.to_s, value: +value + hash[key][:value], cas_unique: cas_unique }
+        hash[key] = {flags: hash[key][:flags] + flags, exptime: exptime.to_s, value: +value + hash[key][:value], cas_unique: cas_unique}
         reply != 'false' ? (client.puts "\r\nSTORED") : nil
       when 'cas'
         # set key flags exptime bytes unique_cas_key [noreply] value
@@ -155,12 +138,16 @@ loop do
         exptime_ = Time.now + expire_time
         o = [('a'..'z'), ('A'..'Z')].map(&:to_a).flatten
         cas_unique = (0...8).map { o[rand(o.length)] }.join
-        hash[key] = { flags: flags, exptime: exptime_.to_s, value: value, cas_unique: cas_unique }
+        hash[key] = {flags: flags, exptime: exptime_.to_s, value: value, cas_unique: cas_unique}
         reply != 'false' ? (client.puts "\r\nSTORED") : (client.puts '')
+      when 'quit'
+        client.puts 'quit'
       else
         client.puts "You gave me #{response} -- I have no idea what to do with that."
       end # end case
+
     end # end while
+
   end # end thread
 end # end loop
 
@@ -176,6 +163,3 @@ end # end loop
 # append
 # prepend
 # cas
-
-# repasar metodo set y get
-# averiguar como hacer split del string que me llega y dividirlo en => command {key, value}
