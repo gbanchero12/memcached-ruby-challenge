@@ -1,14 +1,7 @@
 # Memcached-ruby-challenge
 Memcached Ruby challenge for Moove-it workshop
 
-# Moove It Uruguay - Taller Ruby - Guillermo Banchero
-
-# Planificación básica de memcached para Taller Ruby
- Inicio aplicacion => Cargo Hash General (HG)
- Instancio TCP/IP Server Socket (TCPServer.open(PORT))
- switch case [operacion] => logica_operacion => Modifica HG
- Retorno mensaje a cliente
-
+# Guillermo Banchero
 
  Example: set tutorialspoint 0 900 9
  memcached
@@ -30,3 +23,9 @@ Memcached Ruby challenge for Moove-it workshop
  append
  prepend
  cas
+ 
+# Basic memcached planning for Ruby Workshop
+  Application start => Charge Hash General (HG)
+  TCP / IP Server Socket Instance (TCPServer.open (PORT))
+  switch case [operation] => operation_logic => Modify HG
+  Return message to customer

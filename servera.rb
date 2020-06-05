@@ -13,10 +13,10 @@ require './models/storage_commands/cas'
 
 server = TCPServer.open(2000)
 
-# General Hash with test data
-hash = { 'datos' => { flags: '0', exptime: '2020-07-01T00:04:00+00:00', value: 'valor_de_prueba', cas_unique: 'aFwamHvj' },
-         'de' => { flags: '0', exptime: '2020-07-01T00:04:00+00:00', value: 'valor_de_prueba_2', cas_unique: 'fhRyDbne' },
-         'prueba' => { flags: '0', exptime: '2020-07-01T00:04:00+00:00', value: 'valor_de_prueba_3', cas_unique: 'wuRbsjWk' } }
+# Hash with test data
+hash = { 'test1' => { flags: '0', exptime: '2020-07-01T00:04:00+00:00', value: 'test_value_1', cas_unique: 'aFwamHvj' },
+         'test2' => { flags: '0', exptime: '2020-07-01T00:04:00+00:00', value: 'test_value_2', cas_unique: 'fhRyDbne' },
+         'test3' => { flags: '0', exptime: '2020-07-01T00:04:00+00:00', value: 'test_value_3', cas_unique: 'wuRbsjWk' } }
 
 loop do
   Thread.start(server.accept) do |client|
@@ -42,7 +42,6 @@ loop do
       when 'prepend'
         client.puts Prepend.new(array, hash)
       when 'cas'
-        # set key flags exptime bytes unique_cas_key [noreply] value
         client.puts Cas.new(array, hash)
       when 'quit'
         client.puts 'quit'

@@ -29,7 +29,7 @@ class Client
       Thread.new do
         loop do
           response = @socket.gets.chomp
-          puts "#{response}"
+          puts "#{response + 'respppp!'}"
           if response.eql?'quit'
             @socket.close
           end
