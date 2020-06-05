@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'socket'
 
 class Client
@@ -11,7 +13,7 @@ class Client
   end
 
   def send_request
-    puts "Establish a connection..."
+    puts 'Establish a connection...'
     begin
       Thread.new do
         loop do
@@ -21,25 +23,23 @@ class Client
         end
       end
     end
-
   end
 
   def listen_response
-    begin
-      Thread.new do
-        loop do
-          response = @socket.gets.chomp
-          puts "#{response + 'respppp!'}"
-          if response.eql?'quit'
-            @socket.close
+    Thread.new do
+      loop do
+        response = @socket.gets.chomp
+        resp = response.split('<!split!>')
+        if resp[1].eql? 'send'
+          puts (resp[0]).to_s
+          @socket.close if response.eql? 'quit'
+        else
+          @socket.puts response
           end
-        end
       end
     end
   end
 end
 
-
-
-socket = TCPSocket.open( "localhost", 2000 )
-Client.new( socket )
+socket = TCPSocket.open('localhost', 2000)
+Client.new(socket)
