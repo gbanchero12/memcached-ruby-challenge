@@ -29,13 +29,8 @@ class Client
     Thread.new do
       loop do
         response = @socket.gets.chomp
-        resp = response.split('<!split!>')
-        if resp[1].eql? 'send'
-          puts (resp[0]).to_s
-          @socket.close if response.eql? 'quit'
-        else
-          @socket.puts response
-          end
+        puts response.to_s
+        @socket.close if response.eql? 'quit'
       end
     end
   end
