@@ -1,12 +1,12 @@
-
+# frozen_string_literal: true
 
 class Get < Retrieval
-
   def initialize(array, hash)
+    checkExpiration(array, hash)
     get(array, hash)
   end
 
-  #Get Memcached method: params => array, hash
+  # Get Memcached method: params => array, hash
   # array => command info received
   # hash => general hash in memory
   # Assign superclass 'result' of the operation
@@ -19,6 +19,7 @@ class Get < Retrieval
 
     response_.nil? ? (self.result = 'false') : (self.result = "\r\n" + response_.to_s)
 
-    self.result = ('ERROR') if array.length != 2
+    self.result = 'ERROR' if array.length != 2
   end
+
 end

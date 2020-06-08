@@ -2,6 +2,7 @@
 
 class Gets < Retrieval
   def initialize(array, hash)
+    checkExpiration(array, hash)
     gets(array, hash)
   end
 
@@ -18,4 +19,5 @@ class Gets < Retrieval
 
     self.result = 'ERROR' if array.length != 2
   end
+
 end

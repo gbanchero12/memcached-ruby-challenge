@@ -14,7 +14,7 @@ require './models/storage_commands/cas'
 server = TCPServer.open(2000)
 
 # Hash with test data
-hash = { 'test1' => { flags: '0', exptime: '2020-07-01T00:04:00+00:00', value: 'test_value_1', cas_unique: 'aFwamHvj' },
+hash = { 'test1' => { flags: '0', exptime: '2019-07-01T00:04:00+00:00', value: 'test_value_1', cas_unique: 'aFwamHvj' },
          'test2' => { flags: '0', exptime: '2020-07-01T00:04:00+00:00', value: 'test_value_2', cas_unique: 'fhRyDbne' },
          'test3' => { flags: '0', exptime: '2020-07-01T00:04:00+00:00', value: 'test_value_3', cas_unique: 'wuRbsjWk' } }
 
