@@ -16,7 +16,7 @@ class Add < Storage
   # Set a value to a new key. If the key already exists, then it gives the output NOT_STORED.
   #
   def add(value, hash)
-    hash[value[:key]] = { flags: value[:flags], exptime: value[:exptime_].to_s, value: value[:value], cas_unique: value[:cas_unique] }
+    hash[value[:key]] = { flags: value[:flags], exptime: value[:exptime], value: value[:value], cas_unique: value[:cas_unique] }
     value[:reply] != 'false' ? (self.result = "\r\nSTORED") : (self.result = '')
   end
 

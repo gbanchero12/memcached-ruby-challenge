@@ -24,7 +24,7 @@ loop do
 
       text = response.chomp
       array = text.split(' ')
-      command = array[0]
+      command = array[0].downcase
 
       case command
       when 'get'

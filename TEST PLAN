@@ -1,0 +1,41 @@
+#Before :
+1. Run servera.rb
+2. Run client.rb and type the next commands evaluating the result:
+
+# Test Case 1
+# Assert that returns the word false in the result of the command
+# Command 'get test1'
+# Precondition: key test1 is deprecated
+# Expected result false
+
+# Test Case 2
+# Assert that return a result with a value from a stored key
+# Command 'get test2'
+# Precondition: key test2 is stored
+# Expected result 'VALUE test2 0 2020-07-01T00:04:00+00:00 12
+#                   test_value_2'
+
+# Test Case 3
+# Assert that can set a new key with a value
+# Command 'set test 1 900 4 test_value'
+# Precondition: -
+# Expected result 'STORED'
+
+# Test Case 4
+# Assert that can get the case_unique from a stored pair
+# Command 'gets test'
+# Precondition: test is stored in the hash
+# Expected result '(cas_unique_key)'
+
+# Test Case 5
+# Assert that can ADD a new pair
+# Command 'add test 1 900 4 test'
+# Precondition: test isn't stored in the hash
+# Expected result 'STORED'
+
+# Test Case 6
+# Assert that can´t ADD a pair stored before
+# Command 'add test 1 900 4 test'
+# Precondition: test is stored in the hash
+# Expected result 'NOT_STORED'
+
