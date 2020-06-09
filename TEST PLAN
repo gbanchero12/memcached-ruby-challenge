@@ -17,7 +17,7 @@
 
 # Test Case 3
 # Assert that can set a new key with a value
-# Command 'set test 1 900 4 test_value'
+# Command 'set test 1 900 10 test_value'
 # Precondition: -
 # Expected result 'STORED'
 
@@ -53,28 +53,58 @@
 
 # Test Case 9
 # Assert that can APPEND a value stored before
-# Command 'append test 1 900 4 _test'
+# Command 'append test 1 900 5 _test'
 # Precondition: test is stored in the hash
 # Expected result 'STORED'
 
 # Test Case 10
 # Assert that can't APPEND a new value
-# Command 'append test 1 900 4 _test'
+# Command 'append test 1 900 5 _test'
 # Precondition: test isn´t stored in the hash
 # Expected result 'NOT_STORED'
 
 # Test Case 11
 # Assert that can PREPEND a value stored before
-# Command 'prepend test 1 900 4 test_'
+# Command 'prepend test 1 900 5 test_'
 # Precondition: test is stored in the hash
 # Expected result 'STORED'
 
 # Test Case 12
 # Assert that can't PREPEND a new value
-# Command 'append test 1 900 4 _test'
+# Command 'append test 1 900 5 _test'
 # Precondition: test isn´t stored in the hash
 # Expected result 'NOT_STORED'
 
+# Test Case 13
+# Assert that can't CAS a new value
+# Command 'cas test 1 900 4 test'
+# Precondition: test isn´t stored in the hash
+# Expected result 'NOT_FOUND'
 
+# Test Case 14
+# Assert that can't CAS a pre-modificated value
+# Command 'gets test' and save the {cas_unique}
+# Command 'set test 1 900 9 new_value'
+# Command 'cas test 1 900 15 {cas_unique} other_new_value'
+# Precondition: test is stored in the hash
+# Expected result 'EXISTS'
 
+# Test Case 13
+# Assert that can CAS a value
+# Command 'gets test' and save the {cas_unique}
+# Command 'cas test 1 900 9 {cas_unique} new_value'
+# Precondition: test is stored in the hash
+# Expected result 'STORED'
+
+# Test Case 14
+# Assert that returns the word false in the result of the command
+# Command 'get test1'
+# Precondition: key test1 is not stored
+# Expected result false
+
+# Test Case 14
+# Assert that returns the word false in the result of the command
+# Command 'gets test1'
+# Precondition: key test1 is not stored
+# Expected result false
 
