@@ -39,3 +39,42 @@
 # Precondition: test is stored in the hash
 # Expected result 'NOT_STORED'
 
+# Test Case 7
+# Assert that can´t REPLACE a pair stored before
+# Command 'replace test 1 900 4 test'
+# Precondition: test isn't stored in the hash
+# Expected result 'NOT_STORED'
+
+# Test Case 8
+# Assert that can REPLACE a pair stored before
+# Command 'replace test 1 900 4 test'
+# Precondition: test is stored in the hash
+# Expected result 'STORED'
+
+# Test Case 9
+# Assert that can APPEND a value stored before
+# Command 'append test 1 900 4 _test'
+# Precondition: test is stored in the hash
+# Expected result 'STORED'
+
+# Test Case 10
+# Assert that can't APPEND a new value
+# Command 'append test 1 900 4 _test'
+# Precondition: test isn´t stored in the hash
+# Expected result 'NOT_STORED'
+
+# Test Case 11
+# Assert that can PREPEND a value stored before
+# Command 'prepend test 1 900 4 test_'
+# Precondition: test is stored in the hash
+# Expected result 'STORED'
+
+# Test Case 12
+# Assert that can't PREPEND a new value
+# Command 'append test 1 900 4 _test'
+# Precondition: test isn´t stored in the hash
+# Expected result 'NOT_STORED'
+
+
+
+
