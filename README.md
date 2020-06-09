@@ -22,6 +22,7 @@ Memcached Ruby challenge for Moove-it workshop
            prepend [key] [flags ] [exptime] [bytes] [noreply]* [value_to_prepend]
            cas [key] [flags ] [exptime] [bytes] [unique_cas_key ] [noreply]* [value]
            
+           *optional
 # Output types:
 
 STORED indicates success.
